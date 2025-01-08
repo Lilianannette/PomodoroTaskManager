@@ -3,11 +3,11 @@ import json
 FICHIER_JSON = "data/sessions.json"
 
 def loadData():
-    try:
+    # try:
         with open(FICHIER_JSON, "r") as fichier:
             return json.load(fichier)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {"sessions": [], "tâches": []}
+    # except (FileNotFoundError, json.JSONDecodeError):
+    #     return {"sessions": [], "tâches": []}
 
 def saveData(data):
     with open(FICHIER_JSON, "w") as fichier:
@@ -33,19 +33,19 @@ def addTasks():
     print(f"Tâche '{task}' ajouté avec succès.")
 
 def deleteTask():
-    data = loadData
-    tasks = data.get("Tasks", [])
+    data = loadData()
+    tasks = data.get("tasks", [])
     if not tasks:
         print("Aucun tâche a supprimer")
         return
 
-        displayTask()
+    displayTask()
     try:
         choice = int(input("Entrez le numéro de la tâche à supprimer : "))
         if 1 <= choice <= len(tasks):
             taskToBeDeleted = tasks.pop(choice - 1)
-            data["taches"] = tasks
-            loadData(data)
+            data["tasks"] = tasks
+            saveData(data)
             print(f"Tâche '{taskToBeDeleted}' supprimée avec succès.")
         else:
             print("Numéro invalide.")
